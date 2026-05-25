@@ -12,11 +12,11 @@ export default async function Categorie({
   const pepites = await getPepites();
 
   const results = pepites.filter(
-    (p: any) =>
+    (p:any)=>
       p.category?.trim().toLowerCase() ===
       decodeURIComponent(categorie)
-        .trim()
-        .toLowerCase()
+      .trim()
+      .toLowerCase()
   );
 
   return (
@@ -24,8 +24,6 @@ export default async function Categorie({
     <main className="bg-[#F6F1EA] min-h-screen">
 
       <Navbar />
-
-      {/* HERO */}
 
       <section className="pt-36 px-6 pb-14">
 
@@ -47,14 +45,11 @@ export default async function Categorie({
 
       </section>
 
-
-      {/* ARTICLES */}
-
       <section className="px-6 pb-24">
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
 
-          {results.map((p: any) => (
+          {results.map((p:any)=>(
 
             <div
               key={p.id}
@@ -63,25 +58,14 @@ export default async function Categorie({
               rounded-3xl
               overflow-hidden
               shadow-md
-              hover:-translate-y-2
-              hover:shadow-xl
-              duration-300
               "
             >
 
-              <img
-                src={p.image}
-                alt={p.title}
-                className="h-[250px] w-full object-cover"
-              />
+              <div className="h-[250px] bg-[#DDD]"/>
 
               <div className="p-8">
 
-                <p className="uppercase text-xs text-[#B45A52]">
-
-                  {p.category}
-
-                </p>
+                <p>{p.category}</p>
 
                 <h2 className="font-serif text-3xl mt-4">
 
@@ -89,15 +73,9 @@ export default async function Categorie({
 
                 </h2>
 
-                <p className="mt-4 text-[#645D58] leading-7">
+                <p className="mt-4">
 
                   {p.excerpt}
-
-                </p>
-
-                <p className="mt-6 text-sm text-[#999]">
-
-                  {p.date}
 
                 </p>
 

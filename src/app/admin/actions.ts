@@ -1,27 +1,91 @@
 "use server";
 
 import { supabase } from "../../lib/supabase";
+import { revalidatePath } from "next/cache";
 
 export async function updatePepite(
-id:number,
-title:string,
-content:string
+formData:FormData
 ){
 
-const {error}=await supabase
+const id=parseInt(
+String(formData.get("id"))
+);
+
+if(!id){
+return;
+}
+
+const title=String(
+formData.get("title")
+).trim();
+
+const content=String(
+formData.get("content")
+);
+
+await supabase
 .from("pepites")
 .update({
-
-title:title,
-content:content
-
+title,
+content
 })
 .eq("id",id);
 
-if(error){
-
-console.log(error);
+revalidatePath("/admin");
 
 }
+
+export async function publishPepite(
+formData:FormData
+){
+
+const id=parseInt(
+String(formData.get("id"))
+);
+
+await supabase
+.from("pepites")
+.update({
+published:true
+})
+.eq("id",id);
+
+revalidatePath("/admin");
+
+}
+
+export async function deletePepite(
+formData:FormData
+){
+
+const id=parseInt(
+String(formData.get("id"))
+);
+
+await supabase
+.from("pepites")
+.delete()
+.eq("id",id);
+
+revalidatePath("/admin");
+
+}
+
+export async function regenerateImage(
+formData:FormData
+){
+
+const id=parseInt(
+String(formData.get("id"))
+);
+
+await supabase
+.from("pepites")
+.update({
+image:"https://picsum.photos/1200/800"
+})
+.eq("id",id);
+
+revalidatePath("/admin");
 
 }

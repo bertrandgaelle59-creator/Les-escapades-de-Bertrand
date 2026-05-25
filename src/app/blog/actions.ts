@@ -1,21 +1,42 @@
 import { supabase } from "../../lib/supabase";
 
-export async function getPepites() {
+export async function getPepites(){
 
-  const { data, error } = await supabase
-    .from("pepites")
-    .select("*");
+const {data,error}=await supabase
+.from("pepites")
+.select("*");
 
-  if(error){
+if(error){
 
-    console.log("ERREUR SUPABASE :", error);
+console.log(
+"ERREUR SUPABASE :",
+error
+);
 
-    return [];
+return[];
 
-  }
+}
 
-  console.log("DONNEES :", data);
+return data||[];
 
-  return data || [];
+}
+
+export async function getPublishedPepites(){
+
+const {data,error}=await supabase
+.from("pepites")
+.select("*")
+.eq(
+"published",
+true
+);
+
+if(error){
+
+return[];
+
+}
+
+return data||[];
 
 }

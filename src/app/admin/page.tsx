@@ -1,177 +1,185 @@
 import Navbar from "../../components/Navbar";
 import { getPepites } from "../blog/actions";
+import {
+  updatePepite,
+  publishPepite,
+  deletePepite,
+  regenerateImage
+} from "./actions";
 
 export default async function Admin() {
-  const allPepites = await getPepites();
+const allPepites=
+await getPepites();
 
-  const pepites = allPepites.sort(
-    (a: any, b: any) =>
-      new Date(b.date).getTime() -
-      new Date(a.date).getTime()
-  );
+const drafts=
+allPepites
+.filter(
+(p:any)=>
+p.published!==true
+);
+
+const published=
+allPepites
+.filter(
+(p:any)=>
+p.published===true
+);
 
   return (
-    <main className="bg-[#F6F1EA] min-h-screen text-[#2F2A25]">
+    <main className="bg-[#F6F1EA] min-h-screen">
 
-      <Navbar />
+      <Navbar/>
 
-      <section className="pt-36 pb-14 px-6">
+      <section className="pt-56 px-6">
 
         <div className="max-w-6xl mx-auto">
 
-          <p className="uppercase tracking-[0.3em] text-[#B45A52] text-xs">
+          <h1 className="font-serif text-5xl mb-10">
             Administration
-          </p>
-
-          <h1 className="font-serif text-5xl md:text-7xl mt-6">
-            Centre éditorial IA
           </h1>
 
-          <p className="mt-6 text-sm text-[#8B8179]">
-            Brouillons IA : {
-              pepites.filter(
-                (p:any)=>p.status==="draft"
-              ).length
-            }
-          </p>
+          <h2
+className="
+text-3xl
+font-serif
+mb-8
+"
+>
 
-        </div>
+Brouillons IA
 
-      </section>
+</h2>
 
-      <section className="px-6 pb-24">
+{drafts.map((item:any)=>(
 
-        <div className="max-w-6xl mx-auto space-y-8">
 
-          {pepites.map((item:any)=>(
-
-            <div
+            <form
               key={item.id}
-              className="bg-white rounded-3xl p-8 shadow-md"
+              action={updatePepite}
+              className="bg-white p-8 rounded-3xl mb-8 shadow"
             >
 
-              <div className="flex items-center gap-3 flex-wrap">
-
-                <p className="uppercase text-xs text-[#B45A52]">
-                  {item.category}
-                </p>
-
-                <span className="bg-[#EFE8DE] px-3 py-1 rounded-full text-xs">
-                  {item.status}
-                </span>
-
-                {item.ai_generated && (
-
-                  <span className="bg-[#A5483C] text-white px-3 py-1 rounded-full text-xs">
-                    IA
-                  </span>
-
-                )}
-
-              </div>
+              <input
+                type="hidden"
+                name="id"
+                value={item.id}
+              />
 
               <input
+                type="hidden"
+                name="title"
+                value={item.title}
+              />
+
+              <p className="text-sm mb-3 text-[#A5483C]">
+                {item.category}
+              </p>
+
+              <p className="text-sm mb-4 font-bold">
+                Statut :
+                {item.published
+                  ? " ✅ Publié"
+                  : " ⏳ Brouillon"}
+              </p>
+
+              <input
+                name="title"
                 defaultValue={item.title}
-                className="
-                w-full
-                mt-5
-                border
-                rounded-xl
-                p-4
-                bg-[#FAF7F2]
-                font-serif
-                text-2xl
-                outline-none
-                "
+                className="w-full border p-4 rounded-xl mb-4"
               />
 
               <textarea
-                defaultValue={
-                  item.content ||
-                  item.excerpt
-                }
-                className="
-                w-full
-                mt-5
-                min-h-[220px]
-                border
-                rounded-2xl
-                p-5
-                bg-[#FAF7F2]
-                text-[#645D58]
-                leading-8
-                outline-none
-                "
+                name="content"
+                defaultValue={item.content}
+                className="w-full border p-4 rounded-xl min-h-[220px]"
               />
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="flex flex-wrap">
 
                 <button
-                  type="button"
-                  className="
-                  px-6
-                  py-4
-                  rounded-xl
-                  font-bold
-                  text-black
-                  border-2
-                  border-[#0E5F3A]
-                  shadow-lg
-                  "
-                  style={{
-                    background:"#34D399"
-                  }}
+                  type="submit"
+                  style={{background:"#34D399"}}
+                  className="mt-6 px-6 py-4 rounded-xl font-bold"
                 >
                   💾 Sauvegarder
                 </button>
 
                 <button
-                  type="button"
-                  className="
-                  px-6
-                  py-4
-                  bg-[#A5483C]
-                  text-white
-                  font-semibold
-                  rounded-xl
-                  shadow
-                  "
+                  formAction={publishPepite}
+                  style={{background:"#F59E0B"}}
+                  className="mt-6 ml-3 px-6 py-4 rounded-xl font-bold"
                 >
                   🚀 Publier
                 </button>
 
                 <button
-                  type="button"
-                  className="
-                  px-6
-                  py-4
-                  bg-gray-200
-                  rounded-xl
-                  shadow
-                  "
+                  formAction={deletePepite}
+                  style={{background:"#EF4444"}}
+                  className="mt-6 ml-3 px-6 py-4 rounded-xl font-bold text-white"
                 >
-                  Ignorer
+                  🗑 Supprimer
                 </button>
 
                 <button
-                  type="button"
-                  className="
-                  px-6
-                  py-4
-                  bg-gray-200
-                  rounded-xl
-                  shadow
-                  "
+                  formAction={regenerateImage}
+                  style={{background:"#6366F1"}}
+                  className="mt-6 ml-3 px-6 py-4 rounded-xl font-bold text-white"
                 >
-                  Régénérer image
+                  🖼 Régénérer image
                 </button>
 
               </div>
 
-            </div>
+            </form>
 
           ))}
+<h2
+className="
+text-3xl
+font-serif
+mt-20
+mb-8
+"
+>
 
+Déjà publiées
+
+</h2>
+
+{published.map((item:any)=>(
+
+<div
+key={item.id}
+className="
+bg-white
+p-6
+rounded-3xl
+mb-6
+opacity-70
+"
+>
+
+<p>
+
+{item.title}
+
+</p>
+
+<p
+className="
+text-sm
+text-gray-500
+mt-2
+"
+>
+
+{item.date}
+
+</p>
+
+</div>
+
+))}
         </div>
 
       </section>

@@ -1,6 +1,6 @@
 export default function Navbar() {
   return (
-    <header className="fixed top-0 left-0 z-50 w-full">
+    <header className="sticky top-0 left-0 z-50 w-full">
 
       <div className="flex items-center justify-between px-8 py-6 backdrop-blur-md bg-black/20">
 
