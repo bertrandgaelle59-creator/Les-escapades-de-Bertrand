@@ -1,135 +1,181 @@
 import Navbar from "../../components/Navbar";
+import { getPepites } from "../blog/actions";
 
-const suggestions = [
+export default async function Admin() {
+  const allPepites = await getPepites();
 
-{
-title:"Un estaminet oublié au cœur des Flandres",
-category:"Estaminets",
-status:"Nouveau"
-},
+  const pepites = allPepites.sort(
+    (a: any, b: any) =>
+      new Date(b.date).getTime() -
+      new Date(a.date).getTime()
+  );
 
-{
-title:"Pourquoi les beffrois dominaient les villes",
-category:"Architecture",
-status:"IA"
-},
+  return (
+    <main className="bg-[#F6F1EA] min-h-screen text-[#2F2A25]">
 
-{
-title:"Cette chapelle cachée près d'Ypres",
-category:"Mémoire",
-status:"À vérifier"
-}
+      <Navbar />
 
-];
+      <section className="pt-36 pb-14 px-6">
 
-export default function Admin() {
+        <div className="max-w-6xl mx-auto">
 
-return (
+          <p className="uppercase tracking-[0.3em] text-[#B45A52] text-xs">
+            Administration
+          </p>
 
-<main className="bg-[#F6F1EA] min-h-screen text-[#2F2A25]">
+          <h1 className="font-serif text-5xl md:text-7xl mt-6">
+            Centre éditorial IA
+          </h1>
 
-<Navbar/>
+          <p className="mt-6 text-sm text-[#8B8179]">
+            Brouillons IA : {
+              pepites.filter(
+                (p:any)=>p.status==="draft"
+              ).length
+            }
+          </p>
 
-<section className="pt-36 pb-14 px-6">
+        </div>
 
-<div className="max-w-6xl mx-auto">
+      </section>
 
-<p className="uppercase tracking-[0.3em] text-[#B45A52] text-xs">
+      <section className="px-6 pb-24">
 
-Administration
+        <div className="max-w-6xl mx-auto space-y-8">
 
-</p>
+          {pepites.map((item:any)=>(
 
-<h1 className="font-serif text-5xl md:text-7xl mt-6">
+            <div
+              key={item.id}
+              className="bg-white rounded-3xl p-8 shadow-md"
+            >
 
-Centre éditorial IA
+              <div className="flex items-center gap-3 flex-wrap">
 
-</h1>
+                <p className="uppercase text-xs text-[#B45A52]">
+                  {item.category}
+                </p>
 
-<p className="mt-8 max-w-3xl text-[#645D58] leading-8">
+                <span className="bg-[#EFE8DE] px-3 py-1 rounded-full text-xs">
+                  {item.status}
+                </span>
 
-Les propositions générées automatiquement
-apparaîtront ici avant publication.
+                {item.ai_generated && (
 
-</p>
+                  <span className="bg-[#A5483C] text-white px-3 py-1 rounded-full text-xs">
+                    IA
+                  </span>
 
-</div>
+                )}
 
-</section>
+              </div>
 
+              <input
+                defaultValue={item.title}
+                className="
+                w-full
+                mt-5
+                border
+                rounded-xl
+                p-4
+                bg-[#FAF7F2]
+                font-serif
+                text-2xl
+                outline-none
+                "
+              />
 
+              <textarea
+                defaultValue={
+                  item.content ||
+                  item.excerpt
+                }
+                className="
+                w-full
+                mt-5
+                min-h-[220px]
+                border
+                rounded-2xl
+                p-5
+                bg-[#FAF7F2]
+                text-[#645D58]
+                leading-8
+                outline-none
+                "
+              />
 
-<section className="px-6 pb-24">
+              <div className="mt-8 flex flex-wrap gap-4">
 
-<div className="max-w-6xl mx-auto space-y-6">
+                <button
+                  type="button"
+                  className="
+                  px-6
+                  py-4
+                  rounded-xl
+                  font-bold
+                  text-black
+                  border-2
+                  border-[#0E5F3A]
+                  shadow-lg
+                  "
+                  style={{
+                    background:"#34D399"
+                  }}
+                >
+                  💾 Sauvegarder
+                </button>
 
-{suggestions.map((item)=>(
+                <button
+                  type="button"
+                  className="
+                  px-6
+                  py-4
+                  bg-[#A5483C]
+                  text-white
+                  font-semibold
+                  rounded-xl
+                  shadow
+                  "
+                >
+                  🚀 Publier
+                </button>
 
-<div
-key={item.title}
-className="bg-white rounded-3xl p-8 shadow-md"
->
+                <button
+                  type="button"
+                  className="
+                  px-6
+                  py-4
+                  bg-gray-200
+                  rounded-xl
+                  shadow
+                  "
+                >
+                  Ignorer
+                </button>
 
-<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <button
+                  type="button"
+                  className="
+                  px-6
+                  py-4
+                  bg-gray-200
+                  rounded-xl
+                  shadow
+                  "
+                >
+                  Régénérer image
+                </button>
 
-<div>
+              </div>
 
-<p className="uppercase text-xs text-[#B45A52]">
+            </div>
 
-{item.category}
+          ))}
 
-</p>
+        </div>
 
-<h2 className="font-serif text-3xl mt-3">
+      </section>
 
-{item.title}
-
-</h2>
-
-<p className="mt-3 text-sm text-[#999]">
-
-{item.status}
-
-</p>
-
-</div>
-
-
-
-<div className="flex flex-wrap gap-3">
-
-<button className="bg-[#A5483C] text-white px-5 py-3 rounded-xl">
-
-Publier
-
-</button>
-
-<button className="border px-5 py-3 rounded-xl">
-
-Ignorer
-
-</button>
-
-<button className="border px-5 py-3 rounded-xl">
-
-Régénérer image
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-))}
-
-</div>
-
-</section>
-
-</main>
-
-)
-
+    </main>
+  );
 }
