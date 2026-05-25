@@ -4,12 +4,11 @@ import { getPublishedPepites } from "./actions";
 
 export default async function Blog() {
 
-  const pepites = await getPublishedPepites();
+const pepites =
+await getPublishedPepites();
 
-  const featured = pepites
-.filter(
-(p:any)=>p.published===true
-)
+const featured=
+pepites
 .sort(
 (a:any,b:any)=>
 new Date(b.date).getTime()-
@@ -17,7 +16,16 @@ new Date(a.date).getTime()
 )
 .slice(0,3);
 
-  const univers=[
+const archives=
+pepites
+.sort(
+(a:any,b:any)=>
+new Date(b.date).getTime()-
+new Date(a.date).getTime()
+)
+.slice(3);
+
+const univers=[
 
 {
 nom:"Patrimoine",
@@ -58,139 +66,195 @@ categories:[
 
 ];
 
-  return (
+return(
 
-    <main className="bg-[#F6F1EA] min-h-screen text-[#2F2A25]">
+<main className="bg-[#F6F1EA] min-h-screen text-[#2F2A25]">
 
-      <Navbar/>
+<Navbar/>
 
-      <section className="pt-56 px-6 pb-16">
+<section className="pt-56 pb-14 px-6">
 
-        <div className="max-w-6xl mx-auto">
+<div className="max-w-6xl mx-auto">
 
-          <p className="uppercase text-xs tracking-[0.3em] text-[#B45A52]">
+<p className="uppercase tracking-[0.3em] text-[#B45A52] text-xs">
 
-            Blog des Pépites
+Blog des Pépites
 
-          </p>
+</p>
 
-          <h1 className="font-serif text-6xl mt-6">
+<h1 className="font-serif text-5xl md:text-7xl mt-6">
 
-            Les 3 pépites de la semaine
+Les 3 pépites de la semaine
 
-          </h1>
+</h1>
 
-          <p className="mt-8 max-w-3xl text-[#645D58]">
+</div>
 
-            Chaque semaine, de nouvelles histoires,
-            anecdotes et lieux méconnus rejoignent
-            la sélection.
+</section>
 
-          </p>
+<section className="px-6 pb-24">
 
-        </div>
+<div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
 
-      </section>
+{featured.map((p:any)=>(
 
-      <section className="px-6 pb-24">
+<div
+key={p.id}
+className="
+bg-white
+rounded-3xl
+overflow-hidden
+shadow-md
+"
+>
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+<img
+src={p.image}
+alt={p.title}
+className="
+h-[250px]
+w-full
+object-cover
+"
+/>
 
-          {featured.map((p:any)=>(
+<div className="p-8">
 
-            <div
-              key={p.id}
-              className="
-              bg-white
-              rounded-3xl
-              overflow-hidden
-              shadow-md
-              hover:-translate-y-2
-              duration-300
-              "
-            >
+<p className="uppercase text-xs text-[#B45A52]">
 
-              <img
-                src={p.image}
-                alt={p.title}
-                className="
-                h-[250px]
-                w-full
-                object-cover
-                "
-              />
+{p.category}
 
-              <div className="p-8">
+</p>
 
-                <p className="uppercase text-xs text-[#B45A52]">
+<h2 className="font-serif text-3xl mt-4">
 
-                  {p.category}
+{p.title}
 
-                </p>
+</h2>
 
-                <h2 className="font-serif text-3xl mt-4">
+<p className="mt-4 text-[#645D58]">
 
-                  {p.title}
+{p.excerpt}
 
-                </h2>
+</p>
 
-                <p className="mt-4 text-[#645D58]">
+</div>
 
-                  {p.excerpt}
+</div>
 
-                </p>
+))}
 
-              </div>
+</div>
 
-            </div>
+</section>
 
-          ))}
+<section className="bg-white py-20 px-6">
 
-        </div>
+<div className="max-w-6xl mx-auto">
 
-      </section>
+<h2 className="font-serif text-5xl">
 
-      <section className="bg-white py-20 px-6">
+Explorer par univers
 
-        <div className="max-w-6xl mx-auto">
+</h2>
 
-          <h2 className="font-serif text-5xl">
+<div className="flex flex-wrap gap-4 mt-10">
 
-            Explorer par univers
-
-          </h2>
-
-          <div className="flex flex-wrap gap-4 mt-10">
-
-            {univers.map((u:any)=>(
+{univers.map((u:any)=>(
 
 <Link
 key={u.nom}
 href={`/blog/${encodeURIComponent(
 u.categories[0].toLowerCase()
 )}`}
-                className="
-                bg-[#F6F1EA]
-                rounded-full
-                px-6
-                py-4
-                "
-              >
+className="
+bg-[#F6F1EA]
+rounded-full
+px-6
+py-4
+"
+>
 
-                {u.nom}
+{u.nom}
 
-              </Link>
+</Link>
 
-            ))}
+))}
 
-          </div>
+</div>
 
-        </div>
+</div>
 
-      </section>
+</section>
 
-    </main>
+<section className="px-6 py-24">
 
-  );
+<div className="max-w-6xl mx-auto">
+
+<h2 className="font-serif text-5xl mb-10">
+
+Archives
+
+</h2>
+
+<div className="grid md:grid-cols-3 gap-10">
+
+{archives.map((p:any)=>(
+
+<div
+key={p.id}
+className="
+bg-white
+rounded-3xl
+overflow-hidden
+shadow-md
+"
+>
+
+<img
+src={p.image}
+alt={p.title}
+className="
+h-[250px]
+w-full
+object-cover
+"
+/>
+
+<div className="p-8">
+
+<p className="uppercase text-xs text-[#B45A52]">
+
+{p.category}
+
+</p>
+
+<h2 className="font-serif text-2xl mt-4">
+
+{p.title}
+
+</h2>
+
+<p className="mt-4 text-[#645D58]">
+
+{p.excerpt}
+
+</p>
+
+</div>
+
+</div>
+
+))}
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+)
 
 }

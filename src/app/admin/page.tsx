@@ -64,7 +64,11 @@ Brouillons IA
                 name="id"
                 value={item.id}
               />
-
+<input
+  type="hidden"
+  name="category"
+  value={item.category}
+/>
               <input
                 type="hidden"
                 name="title"
@@ -93,7 +97,23 @@ Brouillons IA
                 defaultValue={item.content}
                 className="w-full border p-4 rounded-xl min-h-[220px]"
               />
+<label className="block mt-6 mb-2 font-bold">
 
+Prompt image IA
+
+</label>
+
+<textarea
+name="image_prompt"
+defaultValue={item.image_prompt || ""}
+className="
+w-full
+border
+p-4
+rounded-xl
+min-h-[100px]
+"
+/>
               <div className="flex flex-wrap">
 
                 <button
