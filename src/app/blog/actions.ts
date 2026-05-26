@@ -33,6 +33,11 @@ true
 
 if(error){
 
+console.log(
+"ERREUR SUPABASE:",
+error
+);
+
 return[];
 
 }

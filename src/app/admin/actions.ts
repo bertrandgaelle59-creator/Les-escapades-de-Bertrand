@@ -25,13 +25,21 @@ String(
 formData.get("image_prompt")
 );
 
+const article_image=
+String(
+formData.get(
+"article_image"
+)
+);
+
 await supabase
 .from("pepites")
 .update({
 
 title,
 content,
-image_prompt
+image_prompt,
+article_image
 
 })
 .eq("id",id);
@@ -49,18 +57,20 @@ formData:FormData
 ){
 
 const id=parseInt(
-String(formData.get("id"))
+String(
+formData.get("id")
+)
 );
 
 await supabase
 .from("pepites")
 .update({
 
-published:true
+published:true,
+featured_week:true,
+status:"published"
 
 })
-.eq("id",id);
-
 
 revalidatePath("/admin");
 revalidatePath("/blog");
@@ -104,10 +114,7 @@ formData.get("image_prompt")
 );
 
 
-// Étape temporaire propre :
-// on stocke le prompt validé.
-// La génération OpenAI image
-// sera branchée ensuite.
+// temporaire : stockage prompt
 
 await supabase
 .from("pepites")

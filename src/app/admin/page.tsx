@@ -100,7 +100,25 @@ Brouillons IA
 <label className="block mt-6 mb-2 font-bold">
 
 Prompt image IA
+<label className="block mt-6 mb-2 font-bold">
 
+Image illustration (facultative)
+
+</label>
+
+<input
+name="article_image"
+defaultValue={item.article_image || ""}
+
+placeholder="/images/geants.jpg"
+
+className="
+w-full
+border
+p-4
+rounded-xl
+"
+/>
 </label>
 
 <textarea
