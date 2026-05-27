@@ -1,16 +1,28 @@
 "use server";
 
-import OpenAI from "openai";
-import { supabase } from "../../lib/supabase";
-import { revalidatePath } from "next/cache";
+import { GoogleGenerativeAI }
+from "@google/generative-ai";
 
-const openai=new OpenAI({
-apiKey:process.env.OPENAI_API_KEY
+import { supabase }
+from "../../lib/supabase";
+
+import { revalidatePath }
+from "next/cache";
+
+const genAI=
+new GoogleGenerativeAI(
+process.env.GEMINI_API_KEY!
+);
+
+const model=
+genAI.getGenerativeModel({
+model:"gemini-2.5-flash"
 });
 
 const prompt=`
 
-Tu es un rédacteur expert du patrimoine des Hauts-de-France.
+Tu es un rédacteur expert du patrimoine
+des Hauts-de-France.
 
 Ta mission :
 
@@ -25,16 +37,25 @@ ou une anecdote méconnue du Nord.
 Contraintes :
 
 - Le titre doit être une vraie question intrigante
+
 - Répondre clairement à la question dès les premières phrases
+
 - Développer une histoire complète
+
 - Ajouter un contexte historique précis
+
 - Ajouter un détail surprenant
-- Longueur obligatoire :
+
+- Longueur :
 180 à 200 mots
+
 - Ton chaleureux
+
 - Narratif
+
 - Pas de listes
-- Donner envie d'en découvrir plus
+
+- Donner envie de découvrir davantage la région
 
 Catégories autorisées :
 
@@ -58,37 +79,31 @@ Retour JSON uniquement :
 `;
 
 export async function generateInitialPepites(
-nombre=20
+nombre=3
 ){
 
 for(let i=0;i<nombre;i++){
 
-const completion=
-await openai.chat.completions.create({
+const result=
+await model.generateContent(
+prompt
+);
 
-model:"gpt-4o",
+const text=
+result.response
+.text()
+.replace(/```json/g,"")
+.replace(/```/g,"")
+.trim();
 
-messages:[
+console.log(
+"Réponse Gemini :",
+text
+);
 
-{
-role:"user",
-content:prompt
-}
-
-],
-
-response_format:{
-type:"json_object"
-}
-
-});
 
 const data=
-JSON.parse(
-completion
-.choices[0]
-.message.content || "{}"
-);
+JSON.parse(text);
 
 await supabase
 .from("pepites")
@@ -97,6 +112,7 @@ await supabase
 title:data.title,
 
 content:data.content,
+
 excerpt:data.excerpt,
 
 category:data.category,
@@ -111,16 +127,12 @@ article_image:null,
 
 date:
 new Date()
-.toISOString(),
-
-created_at:
-new Date()
 .toISOString()
 
 });
 
 }
 
-revalidatePath("/admin");
-
+// revalidatePath("/admin");
+// revalidatePath("/blog");
 }
