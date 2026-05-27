@@ -67,6 +67,23 @@ formData.get("id")
 )
 );
 
+// retire les anciennes pépites vedettes
+
+await supabase
+.from("pepites")
+.update({
+
+featured_week:false
+
+})
+.eq(
+"featured_week",
+true
+);
+
+
+// publie la nouvelle
+
 await supabase
 .from("pepites")
 .update({

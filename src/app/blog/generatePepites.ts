@@ -21,6 +21,20 @@ genAI.getGenerativeModel({
 model:"gemini-2.5-flash"
 
 });
+const {data:existing}=await supabase
+.from("pepites")
+.select("title")
+.order("id",{
+ascending:false
+})
+.limit(20);
+
+const titresExistants=
+existing
+?.map(
+(p:any)=>p.title
+)
+.join("\n- ");
 
 for(
 let i=0;
@@ -103,6 +117,18 @@ Légendes
 Insolite
 Patrimoine
 Belgique
+
+Pépites déjà créées :
+
+- ${titresExistants}
+
+IMPORTANT :
+
+Ne jamais reprendre ces sujets,
+ces lieux
+ou ces angles.
+
+Cherche des thèmes totalement différents.
 
 Retour JSON uniquement :
 

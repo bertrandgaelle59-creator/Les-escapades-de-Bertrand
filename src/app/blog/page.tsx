@@ -1,18 +1,18 @@
-import {
-getTheme
-}
-from "../../lib/categoryTheme";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
-import { getPublishedPepites } from "./actions";
+import { getPepites } from "./actions";
 
-export default async function Blog() {
+export default async function Blog(){
 
-const pepites =
-await getPublishedPepites();
+const pepites=
+await getPepites();
 
 const featured=
 [...pepites]
+.filter(
+(p:any)=>
+p.published===true
+)
 .sort(
 (a:any,b:any)=>
 new Date(b.date).getTime()-
@@ -20,96 +20,115 @@ new Date(a.date).getTime()
 )
 .slice(0,3);
 
-const archives =
-[...pepites]
-.sort(
-(a:any,b:any)=>
-new Date(b.date).getTime()-
-new Date(a.date).getTime()
-)
-.slice(3);
-
-
 const univers=[
 
 {
 nom:"Patrimoine & Architecture",
+
+slug:"patrimoine",
+
 categories:[
 "Architecture",
 "Histoire",
 "Patrimoine"
 ],
-color:"#C77B6A",
+
+color:"#B35C44",
+
 image:"/univers/patrimoine.png"
 },
 
 {
 nom:"Bonnes adresses",
+
+slug:"estaminets",
+
 categories:[
 "Estaminets"
 ],
-color:"#9CAF88",
+
+color:"#667C52",
+
 image:"/univers/estaminet.png"
 },
 
 {
 nom:"Traditions & Folklore",
+
+slug:"legendes",
+
 categories:[
 "Légendes"
 ],
-color:"#90A8B8",
+
+color:"#4F6D8A",
+
 image:"/univers/traditions.png"
 },
 
 {
 nom:"Lieux insolites",
+
+slug:"insolite",
+
 categories:[
 "Insolite"
 ],
-color:"#D8BF8A",
+
+color:"#C29547",
+
 image:"/univers/lieux.png"
 },
 
 {
 nom:"Belgique Passionnément",
+
+slug:"belgique",
+
 categories:[
 "Belgique"
 ],
-color:"#B494B8",
+
+color:"#6D4C7D",
+
 image:"/univers/belgique.png"
 }
 
 ];
 
-
-const getCategoryColor=(category:string)=>{
+const getCategoryColor=(
+category:string
+)=>{
 
 switch(category){
 
 case "Architecture":
+return "#B35C44";
+
 case "Histoire":
+return "#A64E3C";
+
 case "Patrimoine":
-return "#C77B6A";
+return "#C56A50";
 
 case "Estaminets":
-return "#9CAF88";
+return "#667C52";
 
 case "Légendes":
-return "#90A8B8";
+return "#4F6D8A";
 
 case "Insolite":
-return "#D8BF8A";
+return "#C29547";
 
 case "Belgique":
-return "#B494B8";
+return "#6D4C7D";
 
 default:
-return "#DDD";
+return "#B0A79F";
 
 }
 
 };
-
 
 return(
 
@@ -117,8 +136,7 @@ return(
 
 <Navbar/>
 
-
-<section className="pt-44 pb-2 px-6">
+<section className="pt-44 pb-8 px-6">
 
 <div className="max-w-6xl mx-auto">
 
@@ -140,7 +158,7 @@ Blog des Pépites
 
 <p
 className="
-mt-8
+mt-6
 max-w-3xl
 leading-8
 text-[#645D58]
@@ -159,7 +177,7 @@ className="
 font-serif
 text-2xl
 md:text-3xl
-mt-4
+mt-8
 leading-tight
 max-w-3xl
 "
@@ -169,8 +187,6 @@ Les 3 nouvelles pépites à découvrir cette semaine
 
 </h1>
 
-
-
 </div>
 
 </section>
@@ -179,15 +195,20 @@ Les 3 nouvelles pépites à découvrir cette semaine
 <section
 className="
 px-6
-pb-0
-mt-[-45px]
-bg-gradient-to-b
-from-[#F6F1EA]
-to-[#F9F6F2]
+pb-12
+mt-[-25px]
 "
 >
 
-<div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+<div
+className="
+max-w-6xl
+mx-auto
+grid
+md:grid-cols-3
+gap-8
+"
+>
 
 {featured.map((p:any)=>(
 
@@ -196,31 +217,28 @@ href={`/blog/pepite/${p.id}`}
 key={p.id}
 className="
 group
-rounded-[24px]
+rounded-[28px]
+overflow-hidden
 duration-300
 hover:-translate-y-1
+bg-white
 "
 style={{
 
-background:
+borderTop:
+`6px solid ${
 getCategoryColor(
 p.category
-)+"15"
+)
+}`,
+
+boxShadow:
+"0 10px 35px rgba(0,0,0,.08)"
 
 }}
 >
 
-<div
-style={{
-background:
-getCategoryColor(
-p.category
-)
-}}
-className="h-[2px] opacity-60"
-/>
-<div className="p-4 md:p-5">
-
+<div className="p-6">
 
 <div
 className="
@@ -233,15 +251,14 @@ font-bold
 mb-5
 "
 style={{
-background:
-getCategoryColor(
-p.category
-)+"20",
+
+background:"#F8F6F2",
 
 color:
 getCategoryColor(
 p.category
 )
+
 }}
 >
 
@@ -264,9 +281,10 @@ leading-tight
 
 <p
 className="
-mt-3
-leading-6
-text-[14px]
+mt-4
+leading-7
+text-[15px]
+text-[#645D58]
 line-clamp-3
 "
 >
@@ -289,18 +307,19 @@ text-[#8E837A]
 
 <div
 className="
-mt-5
+mt-6
 inline-flex
 items-center
 gap-3
-text-sm
 italic
 "
 style={{
+
 color:
 getCategoryColor(
 p.category
 )
+
 }}
 >
 
@@ -331,12 +350,18 @@ duration-300
 </section>
 
 
+<section
+className="
+bg-white
+pt-8
+pb-10
+px-6
+"
+>
 
-<section className="bg-white pt-0 pb-0 px-6">
+<div className="max-w-6xl mx-auto">
 
-<div className="w-full max-w-6xl mx-auto">
-
-<div className="mb-44">
+<div className="mb-14">
 
 <h2
 className="
@@ -344,7 +369,6 @@ font-serif
 text-2xl
 md:text-3xl
 leading-tight
-max-w-3xl
 "
 >
 
@@ -354,11 +378,10 @@ max-w-3xl
 
 </div>
 
-
 <div
 className="
 flex
-gap-3
+gap-4
 items-start
 overflow-hidden
 "
@@ -368,11 +391,8 @@ overflow-hidden
 
 <Link
 key={u.nom}
-href={`/blog/${u.nom
-.toLowerCase()
-.replaceAll("&","")
-.replaceAll(" ","-")
-}`}
+href={`/blog/${u.slug}`}
+
 className="
 group
 flex-1
@@ -383,8 +403,7 @@ min-w-0
 <div
 className="
 overflow-hidden
-rounded-sm
-bg-[#EEE9E2]
+rounded-xl
 "
 >
 
@@ -396,7 +415,6 @@ className="
 w-full
 aspect-[2/5]
 object-cover
-object-center
 transition
 duration-700
 group-hover:scale-105
@@ -407,22 +425,16 @@ group-hover:scale-105
 
 <div
 className="
-mt-3
+mt-4
 text-center
-flex
-flex-col
-items-center
 "
 >
 
 <h3
 className="
 font-serif
-text-x1
-md:text-[28px]
+text-[26px]
 leading-tight
-min-h-[20px]
-px-3
 "
 >
 
@@ -441,22 +453,25 @@ text-[#8E837A]
 {
 pepites.filter(
 (item:any)=>
+
 u.categories.includes(
 item.category
 )
+
 ).length
 }
 
-{" "}escapades
+{" "}pépites
 
 </p>
 
 <div
 className="
-w-10
-h-[2px]
+w-12
+h-[3px]
 mx-auto
-mt-6
+mt-5
+rounded-full
 "
 style={{
 background:u.color
@@ -474,7 +489,6 @@ background:u.color
 </div>
 
 </section>
-
 
 </main>
 

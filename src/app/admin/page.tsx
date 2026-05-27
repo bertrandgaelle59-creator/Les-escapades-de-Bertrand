@@ -21,6 +21,9 @@ allPepites.filter(
 p.published!==true
 );
 
+const nbDrafts=
+drafts.length;
+
 const published=
 allPepites.filter(
 (p:any)=>
@@ -37,11 +40,29 @@ return(
 
 <div className="max-w-6xl mx-auto">
 
-<h1 className="font-serif text-5xl mb-10">
+<h1 className="font-serif text-5xl mb-4">
 
 Administration
 
 </h1>
+
+<div
+className="
+inline-flex
+items-center
+px-5
+py-3
+rounded-full
+bg-[#FFF4E8]
+text-[#B45A52]
+font-bold
+mb-10
+"
+>
+
+🟠 {nbDrafts} pépites en attente de validation
+
+</div>
 
 <div className="mb-8">
 
