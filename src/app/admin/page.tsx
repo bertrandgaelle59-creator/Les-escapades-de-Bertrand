@@ -1,44 +1,71 @@
 import Navbar from "../../components/Navbar";
 import { getPepites } from "../blog/actions";
-import {
-  updatePepite,
-  publishPepite,
-  deletePepite,
-  regenerateImage
-} from "./actions";
 
-export default async function Admin() {
+import {
+updatePepite,
+publishPepite,
+deletePepite,
+regenerateImage,
+generateThreePepites
+}
+from "./actions";
+
+export default async function Admin(){
+
 const allPepites=
 await getPepites();
 
 const drafts=
-allPepites
-.filter(
+allPepites.filter(
 (p:any)=>
 p.published!==true
 );
 
 const published=
-allPepites
-.filter(
+allPepites.filter(
 (p:any)=>
 p.published===true
 );
 
-  return (
-    <main className="bg-[#F6F1EA] min-h-screen">
+return(
 
-      <Navbar/>
+<main className="bg-[#F6F1EA] min-h-screen">
 
-      <section className="pt-56 px-6">
+<Navbar/>
 
-        <div className="max-w-6xl mx-auto">
+<section className="pt-56 px-6">
 
-          <h1 className="font-serif text-5xl mb-10">
-            Administration
-          </h1>
+<div className="max-w-6xl mx-auto">
 
-          <h2
+<h1 className="font-serif text-5xl mb-10">
+
+Administration
+
+</h1>
+
+<div className="mb-8">
+
+<form action={generateThreePepites}>
+
+<button
+className="
+bg-[#B45A52]
+text-white
+px-6
+py-3
+rounded-xl
+"
+>
+
+🧪 Générer 3 pépites (test)
+
+</button>
+
+</form>
+
+</div>
+
+<h2
 className="
 text-3xl
 font-serif
@@ -52,78 +79,81 @@ Brouillons IA
 
 {drafts.map((item:any)=>(
 
+<form
+key={item.id}
+action={updatePepite}
+className="
+bg-white
+p-8
+rounded-3xl
+mb-8
+shadow
+"
+>
 
-            <form
-              key={item.id}
-              action={updatePepite}
-              className="bg-white p-8 rounded-3xl mb-8 shadow"
-            >
-
-              <input
-                type="hidden"
-                name="id"
-                value={item.id}
-              />
 <input
-  type="hidden"
-  name="category"
-  value={item.category}
+type="hidden"
+name="id"
+value={item.id}
 />
-              <input
-                type="hidden"
-                name="title"
-                value={item.title}
-              />
-
-              <p className="text-sm mb-3 text-[#A5483C]">
-                {item.category}
-              </p>
-
-              <p className="text-sm mb-4 font-bold">
-                Statut :
-                {item.published
-                  ? " ✅ Publié"
-                  : " ⏳ Brouillon"}
-              </p>
-
-              <input
-                name="title"
-                defaultValue={item.title}
-                className="w-full border p-4 rounded-xl mb-4"
-              />
-
-              <textarea
-                name="content"
-                defaultValue={item.content}
-                className="w-full border p-4 rounded-xl min-h-[220px]"
-              />
-<label className="block mt-6 mb-2 font-bold">
-
-Prompt image IA
-<label className="block mt-6 mb-2 font-bold">
-
-Image illustration (facultative)
-
-</label>
 
 <input
-name="article_image"
-defaultValue={item.article_image || ""}
+type="hidden"
+name="category"
+value={item.category}
+/>
 
-placeholder="/images/geants.jpg"
+<p className="text-sm mb-3 text-[#A5483C]">
 
+{item.category}
+
+</p>
+
+<p className="text-sm mb-4 font-bold">
+
+Statut :
+
+{item.published
+? " ✅ Publié"
+: " ⏳ Brouillon"}
+
+</p>
+
+<input
+name="title"
+defaultValue={item.title}
 className="
 w-full
 border
 p-4
 rounded-xl
+mb-4
 "
 />
-</label>
+
+<textarea
+name="content"
+defaultValue={item.content}
+className="
+w-full
+border
+p-4
+rounded-xl
+min-h-[220px]
+"
+/>
+
+<p className="mt-6 mb-2 font-bold">
+
+Prompt image IA
+
+</p>
 
 <textarea
 name="image_prompt"
-defaultValue={item.image_prompt || ""}
+defaultValue={
+item.image_prompt||""
+}
 className="
 w-full
 border
@@ -132,45 +162,112 @@ rounded-xl
 min-h-[100px]
 "
 />
-              <div className="flex flex-wrap">
 
-                <button
-                  type="submit"
-                  style={{background:"#34D399"}}
-                  className="mt-6 px-6 py-4 rounded-xl font-bold"
-                >
-                  💾 Sauvegarder
-                </button>
+<p className="mt-6 mb-2 font-bold">
 
-                <button
-                  formAction={publishPepite}
-                  style={{background:"#F59E0B"}}
-                  className="mt-6 ml-3 px-6 py-4 rounded-xl font-bold"
-                >
-                  🚀 Publier
-                </button>
+Image illustration
 
-                <button
-                  formAction={deletePepite}
-                  style={{background:"#EF4444"}}
-                  className="mt-6 ml-3 px-6 py-4 rounded-xl font-bold text-white"
-                >
-                  🗑 Supprimer
-                </button>
+</p>
 
-                <button
-                  formAction={regenerateImage}
-                  style={{background:"#6366F1"}}
-                  className="mt-6 ml-3 px-6 py-4 rounded-xl font-bold text-white"
-                >
-                  🖼 Régénérer image
-                </button>
+<input
+name="article_image"
+defaultValue={
+item.article_image||""
+}
+placeholder="/images/geants.jpg"
+className="
+w-full
+border
+p-4
+rounded-xl
+"
+/>
 
-              </div>
+<div className="flex flex-wrap">
 
-            </form>
+<button
+type="submit"
+style={{
+background:"#34D399"
+}}
+className="
+mt-6
+px-6
+py-4
+rounded-xl
+font-bold
+"
+>
 
-          ))}
+💾 Sauvegarder
+
+</button>
+
+<button
+formAction={publishPepite}
+style={{
+background:"#F59E0B"
+}}
+className="
+mt-6
+ml-3
+px-6
+py-4
+rounded-xl
+font-bold
+"
+>
+
+🚀 Publier
+
+</button>
+
+<button
+formAction={deletePepite}
+style={{
+background:"#EF4444"
+}}
+className="
+mt-6
+ml-3
+px-6
+py-4
+rounded-xl
+font-bold
+text-white
+"
+>
+
+🗑 Supprimer
+
+</button>
+
+<button
+formAction={regenerateImage}
+style={{
+background:"#6366F1"
+}}
+className="
+mt-6
+ml-3
+px-6
+py-4
+rounded-xl
+font-bold
+text-white
+"
+>
+
+🖼 Régénérer image
+
+</button>
+
+</div>
+
+</form>
+
+))}
+
 <h2
 className="
 text-3xl
@@ -218,10 +315,13 @@ mt-2
 </div>
 
 ))}
-        </div>
 
-      </section>
+</div>
 
-    </main>
-  );
+</section>
+
+</main>
+
+);
+
 }
