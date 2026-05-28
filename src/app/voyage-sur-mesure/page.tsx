@@ -8,17 +8,16 @@ export default function VoyageSurMesure() {
 
       {/* HERO */}
 
-      <section className="relative h-[60vh]">
-
+      <section className="relative overflow-hidden"> 
         <img
           src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1600"
-          className="w-full h-full object-cover"
-          alt="Voyage sur mesure"
+  className="w-full h-[140px] md:h-[200px] object-cover"
+  alt="Voyage sur mesure"
         />
 
-        <div className="absolute inset-0 bg-black/35" />
+        <div className="absolute inset-0 bg-black/45" />
 
-        <div className="absolute bottom-10 left-6 md:left-14 text-white">
+        <div className="absolute bottom-4 md:bottom-6 left-5 md:left-10 text-white">
 
           <p className="uppercase tracking-[0.25em] text-xs">
 
@@ -26,8 +25,7 @@ export default function VoyageSurMesure() {
 
           </p>
 
-          <h1 className="font-serif text-4xl md:text-6xl mt-3">
-
+<h1 className="font-serif text-3xl md:text-5xl mt-2 leading-tight">
             Créez votre escapade
 
           </h1>
@@ -47,9 +45,9 @@ export default function VoyageSurMesure() {
 
       {/* INTRO */}
 
-      <section className="max-w-6xl mx-auto px-6 py-14">
+<section className="max-w-5xl mx-auto px-5 md:px-6 py-8 md:py-10">
 
-        <h2 className="font-serif text-3xl md:text-5xl">
+        <h2 className="font-serif text-2xl md:text-4xl leading-tight">
 
           Votre voyage, votre rythme.
 
@@ -83,7 +81,7 @@ export default function VoyageSurMesure() {
 
       {/* COMMENT ÇA FONCTIONNE */}
 
-      <section className="bg-white py-14">
+      <section className="bg-white py-8 md:py-10">
 
         <div className="max-w-6xl mx-auto px-6">
 
@@ -143,7 +141,7 @@ export default function VoyageSurMesure() {
 
       {/* FORMULAIRE */}
 
-      <section className="py-14">
+      <section className="py-8 md:py-10">
 
         <div className="max-w-4xl mx-auto px-6">
 
