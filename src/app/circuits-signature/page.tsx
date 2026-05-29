@@ -84,7 +84,7 @@ src="/détails architecture.png"
         <div>
 
           <img
-            src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=1200"
+            src="/lille.png"
             className="h-[160px] md:h-[260px] w-full object-cover"
             alt="Lille"
           />

@@ -8,10 +8,10 @@ export default function Lille() {
 
       {/* HERO */}
 
-      <section className="relative h-[60vh]">
+      <section className="relative h-[32vh] md:h-[30vh]">
 
         <img
-          src="/lille-hero.png"
+          src="/lille.png"
           className="w-full h-full object-cover"
           alt="Lille"
         />
@@ -20,19 +20,19 @@ export default function Lille() {
 
         <div className="absolute bottom-10 left-6 md:left-14 text-white">
 
-          <p className="uppercase tracking-[0.25em] text-xs">
+          <p className="uppercase tracking-[0.35em] text-sm md:text-base">
 
             Circuit Signature 01
 
           </p>
 
-          <h1 className="font-serif text-4xl md:text-6xl mt-3">
+          <h1 className="font-serif text-5xl md:text-7xl mt-3">
 
             Lille & Métropole
 
           </h1>
 
-          <div className="flex flex-wrap gap-4 mt-4 text-xs uppercase">
+          <div className="flex flex-wrap gap-6 mt-5 text-xs uppercase">
 
             <span>1 journée</span>
             <span>Petits groupes</span>
@@ -47,7 +47,7 @@ export default function Lille() {
 
       {/* INTRO */}
 
-      <section className="max-w-6xl mx-auto px-6 py-14">
+      <section className="max-w-6xl mx-auto px-6 py-8 md:py-14">
 
         <h2 className="font-serif text-3xl md:text-5xl">
 
@@ -84,7 +84,7 @@ export default function Lille() {
 
       {/* PROGRAMME */}
 
-      <section className="bg-white py-14">
+      <section className="py-8 md:py-14">
 
         <div className="max-w-6xl mx-auto px-6">
 
@@ -153,7 +153,7 @@ export default function Lille() {
 
       {/* CONTACT */}
 
-      <section className="py-14">
+      <section className="py-8 md:py-14">
 
         <div className="max-w-4xl mx-auto px-6 text-center">
 

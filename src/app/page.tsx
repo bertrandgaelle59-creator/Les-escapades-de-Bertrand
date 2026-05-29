@@ -6,7 +6,7 @@ export default function Home() {
     <main className="bg-[#F6F1EA] text-[#2F2A25]">
       <Navbar />
 
-      <section className="relative min-h-screen flex items-center">
+      <section className="relative min-h-screen flex items-center pt-24">
         <div className="absolute inset-0">
           <img
             src="/lille-hero.png"
@@ -14,7 +14,7 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
 
-          <div className="absolute inset-0 bg-black/35" />
+          <div className="absolute inset-0 bg-black/35 pointer-events-none" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-8">
