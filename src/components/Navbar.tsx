@@ -4,7 +4,6 @@ import { useState } from "react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-console.log("menuOpen =", menuOpen);
 
   return (
     <header className="fixed top-0 left-0 z-[9999] w-full bg-black/20 backdrop-blur-md">
