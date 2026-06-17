@@ -62,41 +62,81 @@ formData:FormData
 ){
 
 const id=parseInt(
-String(
-formData.get("id")
+String(formData.get("id")
 )
 );
 
-// retire les anciennes pépites vedettes
-
-await supabase
-.from("pepites")
-.update({
-
-featured_week:false
-
-})
-.eq(
-"featured_week",
-true
-);
 
 
-// publie la nouvelle
 
-await supabase
-.from("pepites")
-.update({
+// Récupère les pépites actuellement en vedette
 
-published:true,
-featured_week:true,
-status:"published"
+  const { data: featuredPepites, error } =
+  await supabase
+    .from("pepites")
+    .select("id, created_at")
+    .eq("published", true)
+    .eq("featured_week", true)
+    .order("created_at", {
+      ascending: true
+    });
 
-})
-.eq("id",id);
+  if(error){
 
-revalidatePath("/admin");
-revalidatePath("/blog");
+    console.error(
+      "Erreur récupération vedettes :",
+      error
+    );
+
+    return;
+  }
+
+  // S'il y a déjà 3 vedettes,
+  // on retire la plus ancienne
+
+  if(
+    featuredPepites &&
+    featuredPepites.length >= 3
+  ){
+
+    const oldest =
+      featuredPepites[0];
+
+    await supabase
+      .from("pepites")
+      .update({
+        featured_week:false
+      })
+      .eq("id", oldest.id);
+
+  }
+
+  // Publication de la nouvelle pépite
+
+  const { error: publishError } =
+  await supabase
+    .from("pepites")
+    .update({
+
+      published:true,
+      featured_week:true,
+      status:"published"
+
+    })
+    .eq("id", id);
+
+  if(publishError){
+
+    console.error(
+      "Erreur publication :",
+      publishError
+    );
+
+    return;
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/blog");
 
 }
 
@@ -156,15 +196,28 @@ revalidatePath("/blog");
 
 export async function generateThreePepites(){
 
-console.log(
-"=== GÉNÉRATION LANCÉE ==="
-);
+  try{
 
-await generateInitialPepites(3);
+    console.log(
+      "=== GÉNÉRATION LANCÉE ==="
+    );
 
-console.log(
-"=== GÉNÉRATION TERMINÉE ==="
+    await generateInitialPepites(3);
 
-);
+    revalidatePath("/admin");
+    revalidatePath("/blog");
+
+    console.log(
+      "=== GÉNÉRATION TERMINÉE ==="
+    );
+
+  }catch(error){
+
+    console.error(
+      "ERREUR GÉNÉRATION :",
+      error
+    );
+
+  }
 
 }

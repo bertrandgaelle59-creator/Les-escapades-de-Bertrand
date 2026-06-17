@@ -1,7 +1,32 @@
+"use client";
 import Navbar from "../../components/Navbar";
+import { useRef } from "react";
+import emailjs from "@emailjs/browser";
+import { FormEvent } from "react";
 
 export default function Contact() {
+  const form = useRef<HTMLFormElement>(null);
+
+const sendEmail = (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  emailjs
+    .sendForm(
+      "SERVICE_ID",
+      "TEMPLATE_ID",
+      form.current!,
+      "PUBLIC_KEY"
+    )
+    .then(() => {
+      alert("Votre message a bien été envoyé !");
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("Une erreur est survenue.");
+    });
+};
   return (
+    
     <main className="bg-[#F6F1EA] min-h-screen text-[#2F2A25]">
 
       <Navbar />
@@ -9,7 +34,7 @@ export default function Contact() {
 
       {/* HERO */}
 
-      <section className="pt-36 pb-14 px-6">
+      <section className="pt-20 pb-14 px-6">
 
         <div className="max-w-6xl mx-auto">
 
@@ -19,7 +44,7 @@ export default function Contact() {
 
           </p>
 
-          <h1 className="font-serif text-5xl md:text-7xl mt-6 max-w-4xl leading-tight">
+          <h1 className="font-serif text-4xl md:text-7xl mt-4 max-w-4xl leading-tight">
 
             Parlons de votre prochaine escapade.
 
@@ -56,7 +81,7 @@ export default function Contact() {
 
             </h2>
 
-            <div className="space-y-8 mt-10 text-[#645D58]">
+            <div className="space-y-4 mt-10 text-[#645D58]">
 
               <div>
 
@@ -104,22 +129,12 @@ export default function Contact() {
 
                 <p className="mt-2">
 
-                  contact@lesescapadesdebertrand.fr
+                  lesescapadesdebertrand@gmail.com
 
                 </p>
 
               </div>
 
-
-              <div className="pt-6">
-
-                <p className="italic text-[#A5483C]">
-
-                  "Vivre, comprendre, transmettre"
-
-                </p>
-
-              </div>
 
             </div>
 
@@ -129,56 +144,59 @@ export default function Contact() {
 
           {/* FORMULAIRE */}
 
-          <div className="bg-white p-10 rounded-3xl shadow-lg">
+<div className="bg-white p-8 rounded-3xl shadow-lg">
 
-            <div className="grid gap-5">
+  <form
+    ref={form}
+    onSubmit={sendEmail}
+    className="grid gap-4"
+  >
+    <input
+      name="user_name"
+      placeholder="Nom"
+      className="border p-4 rounded-xl"
+    />
 
-              <input
-                placeholder="Nom"
-                className="border p-4 rounded-xl"
-              />
+    <input
+      name="user_email"
+      placeholder="Email"
+      className="border p-4 rounded-xl"
+    />
 
-              <input
-                placeholder="Email"
-                className="border p-4 rounded-xl"
-              />
+    <input
+      name="telephone"
+      placeholder="Téléphone"
+      className="border p-4 rounded-xl"
+    />
 
-              <input
-                placeholder="Téléphone"
-                className="border p-4 rounded-xl"
-              />
+    <select
+      name="demande"
+      className="border p-4 rounded-xl"
+    >
+      <option>Je souhaite...</option>
+      <option>Un circuit signature</option>
+      <option>Un voyage sur mesure</option>
+      <option>Une information</option>
+    </select>
 
-              <select className="border p-4 rounded-xl">
+    <textarea
+      name="message"
+      placeholder="Parlez-moi de votre projet..."
+      className="border p-4 rounded-xl h-40"
+    />
 
-                <option>Je souhaite...</option>
+    <button
+      type="submit"
+      className="bg-[#A5483C] text-white py-4 rounded-xl mt-2"
+    >
+      Envoyer mon message
+    </button>
 
-                <option>Un circuit signature</option>
+  </form>
 
-                <option>Un voyage sur mesure</option>
+</div>
 
-                <option>Une information</option>
-
-              </select>
-
-
-              <textarea
-                placeholder="Parlez-moi de votre projet..."
-                className="border p-4 rounded-xl h-40"
-              />
-
-
-              <button className="bg-[#A5483C] text-white py-4 rounded-xl mt-2">
-
-                Envoyer mon message
-
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
+</div>
       </section>
 
     </main>

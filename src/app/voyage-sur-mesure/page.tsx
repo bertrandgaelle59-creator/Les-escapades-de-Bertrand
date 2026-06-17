@@ -11,7 +11,7 @@ export default function VoyageSurMesure() {
       <section className="relative overflow-hidden"> 
         <img
           src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1600"
-  className="w-full h-[140px] md:h-[200px] object-cover"
+  className="w-full h-[140px] md:h-[280px] object-cover"
   alt="Voyage sur mesure"
         />
 

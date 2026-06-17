@@ -30,7 +30,7 @@ src="/détails architecture.png"
 
           <h1 className="font-serif text-3xl md:text-5xl mt-2 leading-tight">
 
-            Découvrez quatre territoires racontés depuis l’intérieur
+            Découvrez cinq territoires racontés depuis l’intérieur
 
           </h1>
 
@@ -86,7 +86,7 @@ src="/détails architecture.png"
           <img
             src="/lille.png"
             className="h-[160px] md:h-[260px] w-full object-cover"
-            alt="Lille"
+            alt="Lille, Capitale des Flandres"
           />
 
         </div>
@@ -97,13 +97,13 @@ src="/détails architecture.png"
 
             <p className="uppercase text-[#B45A52] tracking-[0.25em] text-xs">
 
-              01 — Lille & Métropole
+              01 — Balade urbaine entre Patrimoine et Gastronomie
 
             </p>
 
             <h2 className="font-serif text-2xl md:text-[36px] mt-3 leading-tight">
 
-              Lille
+              Lille, la Capitale des Flandres
 
             </h2>
 
@@ -137,53 +137,53 @@ src="/détails architecture.png"
 
       <section className="grid md:grid-cols-2 bg-white">
 
-        <div className="flex items-center px-5 md:px-8 py-4 md:py-6">
+  <div className="md:order-2">
 
-          <div>
+    <img
+      src="/Patrimoine minier.PNG"
+      className="h-[160px] md:h-[260px] w-full object-cover"
+      alt="Bassin Minier"
+    />
 
-            <p className="uppercase text-[#B45A52] tracking-[0.25em] text-xs">
+  </div>
 
-              02 — Patrimoine UNESCO
+  <div className="flex items-center px-5 md:px-8 py-4 md:py-6 md:order-1">
 
-            </p>
+    <div>
 
-            <h2 className="font-serif text-2xl md:text-[36px] mt-3 leading-tight">
+      <p className="uppercase text-[#B45A52] tracking-[0.25em] text-xs">
 
-              Bassin Minier
+        02 — Patrimoine UNESCO
 
-            </h2>
+      </p>
 
-            <p className="mt-3 leading-5 text-[#645D58] text-[15px]">
+      <h2 className="font-serif text-2xl md:text-[36px] mt-3 leading-tight">
 
-              Là où les terrils sont devenus paysages,
-              et où la mémoire ouvrière continue
-              de raconter l’histoire des hommes.
+        Le Bassin Minier, entre histoire et renaissance
 
-            </p>
+      </h2>
 
-            <Link
-              href="/bassin-minier"
-              className="mt-2 inline-flex items-center gap-2 text-[13px] border-b border-black pb-[2px] hover:opacity-70 transition"
-            >
 
-              Découvrir →
+      <p className="mt-3 leading-5 text-[#645D58] text-[15px]">
 
-            </Link>
+        Là où les terrils sont devenus paysages,
+        et où la mémoire ouvrière continue
+        de raconter l’histoire des hommes.
 
-          </div>
+      </p>
 
-        </div>
+      <Link
+        href="/bassin-minier"
+        className="mt-2 inline-flex items-center gap-2 text-[13px] border-b border-black pb-[2px] hover:opacity-70 transition"
+      >
 
-        <div>
+        Découvrir →
 
-          <img
-            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200"
-            className="h-[160px] md:h-[260px] w-full object-cover"
-            alt="Bassin Minier"
-          />
+      </Link>
 
-        </div>
+    </div>
 
+  </div>
       </section>
 
 
@@ -195,10 +195,10 @@ src="/détails architecture.png"
         <div>
 
           <img
-            src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1200"
-            className="h-[160px] md:h-[260px] w-full object-cover"
-            alt="Flandres"
-          />
+  src="/Flandres française2.png"
+  className="h-[160px] md:h-[260px] w-full object-cover"
+  alt="Flandres"
+/>
 
         </div>
 
@@ -208,7 +208,7 @@ src="/détails architecture.png"
 
             <p className="uppercase text-[#B45A52] tracking-[0.25em] text-xs">
 
-              03 — Flandres françaises
+              03 — Flandres française
 
             </p>
 
@@ -247,7 +247,17 @@ src="/détails architecture.png"
 
 <section className="grid md:grid-cols-2 bg-white">
 
-  <div className="flex items-center px-5 md:px-8 py-4 md:py-6">
+  <div className="md:order-2">
+
+    <img
+      src="/Vimy.png"
+      className="h-[160px] md:h-[260px] w-full object-cover"
+      alt="Mémoire de la Grande Guerre"
+    />
+
+  </div>
+
+  <div className="flex items-center px-5 md:px-8 py-4 md:py-6 md:order-1">
 
     <div>
 
@@ -287,16 +297,6 @@ src="/détails architecture.png"
 
   </div>
 
-  <div>
-
-    <img
-      src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200"
-      className="h-[160px] md:h-[260px] w-full object-cover"
-      alt="Mémoire de la Grande Guerre"
-    />
-
-  </div>
-
 </section>
 
 
@@ -310,10 +310,10 @@ src="/détails architecture.png"
   <div>
 
     <img
-      src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=1200"
-      className="h-[160px] md:h-[260px] w-full object-cover"
-      alt="Belgique"
-    />
+  src="/Bruges.png"
+  className="h-[160px] md:h-[260px] w-full object-cover"
+  alt="Belgique"
+/>
 
   </div>
 
@@ -323,13 +323,13 @@ src="/détails architecture.png"
 
       <p className="uppercase text-[#B45A52] tracking-[0.25em] text-xs">
 
-        05 — Joyaux belges
+        05 — La Venise du Nord
 
       </p>
 
       <h2 className="font-serif text-2xl md:text-[36px] mt-3 leading-tight">
 
-        Belgique flamande
+        Bruges, la Venise du Nord
 
       </h2>
 
@@ -339,8 +339,7 @@ src="/détails architecture.png"
         c’est poursuivre la même histoire
         dans une autre langue.
 
-        Bruges, Gand, Ypres,
-        patrimoine flamand et villes de caractère.
+        Venez découvrir Bruges, la sublime Venise du Nord.
 
       </p>
 

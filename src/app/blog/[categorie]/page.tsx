@@ -32,7 +32,7 @@ categories:[
 
 estaminets:{
 
-title:"Bonnes adresses",
+title:"Secrets d'Estaminets",
 
 image:"/univers/estaminet.png",
 

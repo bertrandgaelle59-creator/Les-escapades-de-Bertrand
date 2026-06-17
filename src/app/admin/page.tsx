@@ -29,7 +29,17 @@ allPepites.filter(
 (p:any)=>
 p.published===true
 );
+const featuredPepites =
+published.filter(
+(p:any)=>
+p.featured_week===true
+);
 
+const archives =
+published.filter(
+(p:any)=>
+p.featured_week!==true
+);
 return(
 
 <main className="bg-[#F6F1EA] min-h-screen">
@@ -86,17 +96,7 @@ rounded-xl
 
 </div>
 
-<h2
-className="
-text-3xl
-font-serif
-mb-8
-"
->
 
-Brouillons IA
-
-</h2>
 
 {drafts.map((item:any)=>(
 
@@ -288,7 +288,6 @@ text-white
 </form>
 
 ))}
-
 <h2
 className="
 text-3xl
@@ -297,12 +296,53 @@ mt-20
 mb-8
 "
 >
-
-Déjà publiées
-
+⭐ Pépites de la semaine ({featuredPepites.length})
 </h2>
 
-{published.map((item:any)=>(
+{featuredPepites.map((item:any)=>(
+
+<div
+key={item.id}
+className="
+bg-[#FFF8E7]
+p-6
+rounded-3xl
+mb-6
+border
+border-yellow-300
+"
+>
+
+<p className="font-bold">
+{item.title}
+</p>
+
+<p
+className="
+text-sm
+text-gray-500
+mt-2
+"
+>
+{item.date}
+</p>
+
+</div>
+
+))}
+<h2
+className="
+text-3xl
+font-serif
+mt-20
+mb-8
+"
+>
+📚 Archives ({archives.length})
+</h2>
+
+
+{archives.map((item:any)=>(
 
 <div
 key={item.id}
@@ -316,9 +356,7 @@ opacity-70
 >
 
 <p>
-
 {item.title}
-
 </p>
 
 <p
@@ -328,7 +366,18 @@ text-gray-500
 mt-2
 "
 >
+{item.featured_week
+ ? "⭐ Pépite de la semaine"
+ : "📚 Archive"}
+</p>
 
+<p
+className="
+text-sm
+text-gray-500
+mt-2
+"
+>
 {item.date}
 
 </p>

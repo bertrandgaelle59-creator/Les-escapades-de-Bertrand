@@ -4,19 +4,20 @@ import { getPepites } from "./actions";
 
 export default async function Blog(){
 
-const pepites=
-await getPepites();
-
+const pepites = await getPepites();
+console.log("NOMBRE DE PEPITES :", pepites.length);
+console.log("PEPITES :", pepites);
 const featured=
 [...pepites]
 .filter(
 (p:any)=>
-p.published===true
+p.published===true &&
+p.featured_week===true
 )
 .sort(
 (a:any,b:any)=>
-new Date(b.date).getTime()-
-new Date(a.date).getTime()
+new Date(b.created_at).getTime()-
+new Date(a.created_at).getTime()
 )
 .slice(0,3);
 
@@ -39,7 +40,7 @@ image:"/univers/patrimoine.png"
 },
 
 {
-nom:"Bonnes adresses",
+nom:"Secrets d'Estaminets",
 
 slug:"estaminets",
 
@@ -135,26 +136,38 @@ return(
 <main className="bg-[#F6F1EA] min-h-screen text-[#2F2A25]">
 
 <Navbar/>
+{/* HERO */}
 
-<section className="pt-44 pb-8 px-6">
+      <section className="relative overflow-hidden"> 
+        <img
+          src="lille-hero.png"
+  className="w-full h-[140px] md:h-[380px] object-cover"
+  alt=""
+        />
+
+        <div className="absolute inset-0 bg-black/45" />
+
+        <div className="absolute bottom-4 md:bottom-6 left-5 md:left-10 text-white">
+
+          <p className="uppercase tracking-[0.25em] text-xs">
+
+            Découvrez les secrets du Nord et de la Belgique
+
+          </p>
+
+<h1 className="font-serif text-3xl md:text-5xl mt-2 leading-tight">
+            Le blog des Pépites
+
+          </h1>
+
+        
+</div>
+
+      </section>
+
+<section className="pt-2 pb-8 px-6">
 
 <div className="max-w-6xl mx-auto">
-
-<p
-className="
-uppercase
-tracking-[0.18em]
-text-[#B45A52]
-text-xl
-md:text-2xl
-font-semibold
-mb-6
-"
->
-
-Blog des Pépites
-
-</p>
 
 <p
 className="
@@ -165,8 +178,8 @@ text-[#645D58]
 "
 >
 
-Chaque semaine, Bertrand vous emmène découvrir
-des anecdotes étonnantes, bonnes adresses,
+Chaque semaine, je vous emmène découvrir
+des anecdotes étonnantes, les secrets des estaminets,
 lieux insolites et histoires méconnues
 du Nord et de Belgique.
 
@@ -452,12 +465,10 @@ text-[#8E837A]
 
 {
 pepites.filter(
-(item:any)=>
-
-u.categories.includes(
-item.category
-)
-
+ (item:any)=>
+ item.published===true &&
+ item.featured_week!==true &&
+ u.categories.includes(item.category)
 ).length
 }
 
